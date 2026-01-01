@@ -63,6 +63,7 @@ declare module 'vue' {
   }
 
   interface HTMLAttributes extends Directives, AttributifyAttributes {
+    [key: `data-${string}`]: string
   }
 
 }
