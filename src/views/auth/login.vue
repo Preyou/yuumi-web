@@ -3,13 +3,11 @@ useDark().value = true
 </script>
 
 <template>
-  <Atom base-class="p-4 relative size-full">
-    <div class="flex justify-end absolute w-full p-4 top-0">
-      <Button variant="ghost">
-        Register
-      </Button>
-    </div>
-    <div class="flex flex-col justify-center size-full">
+  <Atom base-class="relative size-full">
+    <Button variant="ghost" class="top-4 right-4 absolute">
+      Register
+    </Button>
+    <div class="flex flex-col justify-center">
       123
     </div>
   </Atom>

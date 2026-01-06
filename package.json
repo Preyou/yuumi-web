@@ -26,6 +26,7 @@
     "nzh": "^1.0.14",
     "openapi-to-dts": "workspace:*",
     "reka-ui": "^2.7.0",
+    "shadcn-vue": "^2.4.3",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",
     "vaul-vue": "^0.4.1",

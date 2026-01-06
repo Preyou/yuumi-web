@@ -36,7 +36,7 @@ export default defineConfig({
         if (root.children.some(({ fullPath }) => !fullPath.endsWith('/:path(.*)'))) {
           const route404 = root.insert(
             ':path(.*)',
-            fileURLToPath(new URL('./src/components/page/404.vue', import.meta.url)).replaceAll(
+            fileURLToPath(new URL('./src/components/molecule/http/404.vue', import.meta.url)).replaceAll(
               '\\',
               '/',
             ),
@@ -63,20 +63,6 @@ export default defineConfig({
       dts: './types/auto/components.d.ts',
       resolvers: [
         RekaResolver({ prefix: 'Rk' }),
-        (name) => {
-          const paths = words(name)
-          if (name.startsWith('Mol')) {
-            return { from: `@/components/molecule`, name: name.slice(2) }
-          }
-          switch (drop(paths, 1)[0]) {
-            case 'Mol':
-              return { from: `@/components/molecule/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
-            case 'In':
-              return { from: `@/components/inorganic/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
-            case 'Org':
-              return { from: `@/components/organic/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
-          }
-        },
         (name) => {
           if (
             Object.keys(UasComps)
@@ -149,6 +135,27 @@ export default defineConfig({
               type: 'component',
             } as ComponentResolverObject),
         ),
+        (name) => {
+          const paths = words(name)
+          if (!['Mol', 'In', 'Org'].includes(paths[0]))
+            return
+
+          paths[0] = paths[0]
+            .replace('Mol', 'molecule')
+            .replace('In', 'inorganic')
+            .replace('Org', 'organic')
+
+          return { from: `@/components/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
+
+          // switch (drop(paths, 1)[0]) {
+          //   case 'Mol':
+          //     return { from: `@/components/molecule/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
+          //   case 'In':
+          //     return { from: `@/components/inorganic/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
+          //   case 'Org':
+          //     return { from: `@/components/organic/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
+          // }
+        },
       ],
       globs: ['src/components/shadcn/**/*.vue', 'src/components/atom/*.vue'],
     }),

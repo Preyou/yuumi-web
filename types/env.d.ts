@@ -62,8 +62,11 @@ declare module 'vue' {
     $cn: typeof import('@/lib/utils')['cn']
   }
 
-  interface HTMLAttributes extends Directives, AttributifyAttributes {
+  interface AttributifyAttributes {
     [key: `data-${string}`]: string
+  }
+
+  interface HTMLAttributes extends Directives, AttributifyAttributes {
   }
 
 }

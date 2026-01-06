@@ -3,13 +3,12 @@ interface Props extends /* @vue-ignore */ Reka.PrimitiveProps {
   class?: Vue.HTMLAttributes['class']
   baseClass?: Vue.HTMLAttributes['class']
 }
+
 defineProps<Props>()
 </script>
 
 <template>
   <RkPrimitive
-    :as="as"
-    :as-child="asChild"
     :class="$cn(baseClass, $props.class)"
   >
     <slot />

@@ -105,7 +105,7 @@ export default antfu(
       },
       extends: ['.eslintrc-auto-import.json'],
     }),
-    ignores: ['src/shadcn/**/*'],
+    ignores: ['src/components/shadcn/**/*'],
   },
   tailwind.configs['flat/recommended'][0],
 )
