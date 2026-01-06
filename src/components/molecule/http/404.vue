@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <div>
-    404
-  </div>
+  <Atom>
+    <slot>
+      404
+    </slot>
+  </Atom>
 </template>

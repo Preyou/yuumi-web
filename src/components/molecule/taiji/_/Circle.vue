@@ -19,8 +19,8 @@ const angle = computed(() => props.textList.findIndex(item => item === props.cur
 </script>
 
 <template>
-  <div
-    class="absolute left-1/2 top-1/2 duration-1000 transform"
+  <Atom
+    base-class="absolute left-1/2 top-1/2 duration-1000 transform"
     :style="{ transform: `rotate(${-angle}deg)` }"
   >
     <span
@@ -35,5 +35,5 @@ const angle = computed(() => props.textList.findIndex(item => item === props.cur
         opacity: current === item ? 1 : 0.4,
       }"
     >{{ item }}</span>
-  </div>
+  </Atom>
 </template>

@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import * as UasComps from '@vueuse/components'
+import { drop, lowerFirst, words } from 'es-toolkit'
 import openapiToDts from 'openapi-to-dts/vite'
 import RekaResolver from 'reka-ui/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -35,7 +36,7 @@ export default defineConfig({
         if (root.children.some(({ fullPath }) => !fullPath.endsWith('/:path(.*)'))) {
           const route404 = root.insert(
             ':path(.*)',
-            fileURLToPath(new URL('./src/components/pages/404.vue', import.meta.url)).replaceAll(
+            fileURLToPath(new URL('./src/components/page/404.vue', import.meta.url)).replaceAll(
               '\\',
               '/',
             ),
@@ -59,18 +60,23 @@ export default defineConfig({
     }),
 
     Components({
-      directoryAsNamespace: true,
-      dirs: ['src/components', 'src/shadcn/*'],
       dts: './types/auto/components.d.ts',
       resolvers: [
-        RekaResolver(),
-        // (name) => {
-        //   console.log(name)
-
-        //   if (name.startsWith('Ui')) {
-        //     return { from: `@/components/ui/${words(name)[1].toLowerCase()}`, name: name.slice(2) }
-        //   }
-        // },
+        RekaResolver({ prefix: 'Rk' }),
+        (name) => {
+          const paths = words(name)
+          if (name.startsWith('Mol')) {
+            return { from: `@/components/molecule`, name: name.slice(2) }
+          }
+          switch (drop(paths, 1)[0]) {
+            case 'Mol':
+              return { from: `@/components/molecule/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
+            case 'In':
+              return { from: `@/components/inorganic/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
+            case 'Org':
+              return { from: `@/components/organic/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
+          }
+        },
         (name) => {
           if (
             Object.keys(UasComps)
@@ -144,7 +150,7 @@ export default defineConfig({
             } as ComponentResolverObject),
         ),
       ],
-      // globs: ['src/components/shadcn/**/*.vue', 'src/components/**/*.vue'],
+      globs: ['src/components/shadcn/**/*.vue', 'src/components/atom/*.vue'],
     }),
     AutoImport({
       dts: './types/auto/auto-imports.d.ts',

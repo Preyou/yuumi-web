@@ -3,15 +3,14 @@ useDark().value = true
 </script>
 
 <template>
-  <div class="flex size-full">
-    <TaijiClock class="bg-secondary flex-1" />
-    <div class="w-auto p-8">
-      <div class="flex justify-end sticky top-0">
-        <Button variant="ghost">
-          Login
-        </Button>
-      </div>
+  <Atom base-class="p-4 relative size-full">
+    <div class="flex justify-end absolute w-full p-4 top-0">
+      <Button variant="ghost">
+        Register
+      </Button>
+    </div>
+    <div class="flex flex-col justify-center size-full">
       123
     </div>
-  </div>
+  </Atom>
 </template>
