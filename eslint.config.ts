@@ -6,6 +6,7 @@ const compat = new FlatCompat()
 export default antfu(
   {
     formatters: true,
+    jsonc: true,
     vue: {
       a11y: false,
       overrides: {
@@ -104,7 +105,7 @@ export default antfu(
       },
       extends: ['.eslintrc-auto-import.json'],
     }),
-    ignores: ['src/components/ui/**/*'],
+    ignores: ['src/shadcn/**/*'],
   },
   tailwind.configs['flat/recommended'][0],
 )

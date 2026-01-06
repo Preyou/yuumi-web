@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import * as UasComps from '@vueuse/components'
+import openapiToDts from 'openapi-to-dts/vite'
 import RekaResolver from 'reka-ui/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Icons from 'unplugin-icons/vite'
@@ -16,7 +17,6 @@ import { defineConfig } from 'vite'
 import devtoolsJson from 'vite-plugin-devtools-json'
 import { envParse } from 'vite-plugin-env-parse'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import openapiToDts from 'openapi-to-dts/vite'
 
 export default defineConfig({
   plugins: [
@@ -60,7 +60,7 @@ export default defineConfig({
 
     Components({
       directoryAsNamespace: true,
-      dirs: ['src/components', '!src/components/ui'],
+      dirs: ['src/components', 'src/shadcn/*'],
       dts: './types/auto/components.d.ts',
       resolvers: [
         RekaResolver(),
@@ -144,7 +144,7 @@ export default defineConfig({
             } as ComponentResolverObject),
         ),
       ],
-      globs: ['src/components/ui/**/*.vue'],
+      // globs: ['src/components/shadcn/**/*.vue', 'src/components/**/*.vue'],
     }),
     AutoImport({
       dts: './types/auto/auto-imports.d.ts',

@@ -8,11 +8,12 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "eslint:inspector": "bunx @eslint/config-inspector@latest",
-    "postinstall": "bun --filter=openapi-to-dts run build"
+    "postinstall": "bun run --filter openapi-to-dts build"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/vue-table": "^8.21.3",
+    "@types/eslint-plugin-tailwindcss": "^3.17.0",
     "@vee-validate/zod": "^4.15.1",
     "@vueuse/core": "^14.1.0",
     "class-variance-authority": "^0.7.1",
@@ -20,6 +21,7 @@
     "embla-carousel-vue": "^8.6.0",
     "es-toolkit": "^1.43.0",
     "lucide-vue-next": "^0.556.0",
+    "nzh": "^1.0.14",
     "openapi-to-dts": "workspace:*",
     "reka-ui": "^2.7.0",
     "tailwind-merge": "^3.4.0",

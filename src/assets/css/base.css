@@ -1,10 +1,14 @@
 * {
-  @apply border-border;
+  @apply border-border p-0 m-0;
 }
 
 body {
   @apply bg-background text-foreground;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+#app {
+  @apply w-screen h-screen;
 }
 
 @theme inline {

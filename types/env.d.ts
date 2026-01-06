@@ -59,7 +59,7 @@ type Directives = {
 declare module 'vue' {
 
   interface ComponentCustomProperties {
-    cn: typeof import('@/lib/utils')['cn']
+    $cn: typeof import('@/lib/utils')['cn']
   }
 
   interface HTMLAttributes extends Directives, AttributifyAttributes {

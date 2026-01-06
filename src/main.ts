@@ -8,6 +8,6 @@ const app = createApp(App)
   .use(router)
   .use(i18n)
 
-app.config.globalProperties.cn = cn
+app.config.globalProperties.$cn = cn
 
 app.mount('#app')

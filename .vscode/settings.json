@@ -1,0 +1,126 @@
+{
+  "npm.packageManager": "bun",
+  "npm.scriptRunner": "bun",
+  // Disable the default formatter, use eslint instead
+  "editor.formatOnSave": false,
+  // Auto fix
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  // Silent the stylistic rules in you IDE, but still auto fix them
+  // "eslint.rules.customizations": [
+  //   {
+  //     "rule": "style/*",
+  //     "severity": "off"
+  //   },
+  //   {
+  //     "rule": "format/*",
+  //     "severity": "off"
+  //   },
+  //   {
+  //     "rule": "*-indent",
+  //     "severity": "off"
+  //   },
+  //   {
+  //     "rule": "*-spacing",
+  //     "severity": "off"
+  //   },
+  //   {
+  //     "rule": "*-spaces",
+  //     "severity": "off"
+  //   },
+  //   {
+  //     "rule": "*-order",
+  //     "severity": "off"
+  //   },
+  //   {
+  //     "rule": "*-dangle",
+  //     "severity": "off"
+  //   },
+  //   {
+  //     "rule": "*-newline",
+  //     "severity": "off"
+  //   },
+  //   {
+  //     "rule": "*quotes",
+  //     "severity": "off"
+  //   },
+  //   {
+  //     "rule": "*semi",
+  //     "severity": "off"
+  //   }
+  // ],
+  // Enable eslint for all supported languages
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "css"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "files.associations": {
+    "*.page-template": "vue",
+    "*.layout-template": "vue",
+    "*.vue": "vue",
+    "*.glsl": "glsl",
+    "*.js": "javascript",
+    "*.json5": "jsonc",
+    "*.md": "markdown",
+    "*.tsx": "typescriptreact",
+    "*.cps": "javascript",
+    "*.gltf": "json",
+    "iostream": "cpp",
+    "*.css": "tailwindcss"
+  },
+  "oxc.enable": true,
+  "types-autoinstaller.saveAsDevDependency": true,
+  "i18n-ally.editor.preferEditor": true,
+
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.enabledFrameworks": [
+    "vue"
+  ],
+  "i18n-ally.enabledParsers": [
+    "json",
+    "json5"
+  ],
+  "i18n-ally.extract.autoDetect": true,
+  "i18n-ally.extract.targetPickingStrategy": "most-similar-by-key",
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.dirStructure": "auto",
+  "i18n-ally.localesPaths": [
+    "src/locales"
+  ],
+  "primevue-helper.showChineseDescription": true,
+  "i18n-ally.sourceLanguage": "zh-CN",
+  "i18n-ally.namespace": true,
+  // "i18n-ally.refactor.templates": [
+  //   "$i18n.t('{key}')"
+  // ],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list",
+    "icon",
+    "enter-active-class",
+    "leave-active-class",
+    "enter-from-class",
+    "enter-to-class",
+    "leave-from-class",
+    "leave-to-class"
+  ],
+  "editor.quickSuggestions": {
+    "strings": "on"
+  }
+}
