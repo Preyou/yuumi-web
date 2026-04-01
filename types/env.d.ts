@@ -11,8 +11,15 @@ import '@vueuse/math'
 import '@vueuse/components'
 import 'reka-ui'
 import 'vue-component-type-helpers'
+import 'zod'
+import './auto/openapi'
+import 'axios'
 
 declare global {
+  declare namespace Z {
+    export type * from 'zod'
+  }
+
   declare namespace VueUse {
     // export type * from '@vueuse/components'
     export type * from '@vueuse/core'
@@ -37,10 +44,6 @@ declare global {
   declare namespace TypeFest {
     export type * from 'type-fest'
   }
-  declare namespace Sys {
-
-  }
-
 }
 
 declare module 'vue-router' {
@@ -48,7 +51,7 @@ declare module 'vue-router' {
     icon?: string
     order?: number
     title?: string
-    type?: '404'
+    type?: '404' | 'sys-menu'
   }
 }
 
@@ -60,10 +63,11 @@ declare module 'vue' {
 
   interface ComponentCustomProperties {
     $cn: typeof import('@/lib/utils')['cn']
+    $api: typeof import('@/api/createApi')['api']
   }
 
   interface AttributifyAttributes {
-    [key: `data-${string}`]: string
+    [key: `data-${string}`]: string | undefined | null
   }
 
   interface HTMLAttributes extends Directives, AttributifyAttributes {

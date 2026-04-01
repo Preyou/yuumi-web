@@ -1,0 +1,5 @@
+export * from './dataTable.emits'
+export * from './dataTable.props'
+export * from './dataTable.slots'
+export * from './dataTable.types'
+export { default as DataTable } from './DataTable.vue'

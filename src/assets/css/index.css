@@ -1,13 +1,16 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@import './theme.css' layer(theme);
+@import './theme.css';
 @import './base.css' layer(base);
-@import './components.css' layer(components);
 @import './utilities.css' layer(utilities);
 
-@plugin "@iconify/tailwind4";
+@plugin "@iconify/tailwind4" {
+  prefixes: lucide;
+}
 
-@layer theme, base, components, utilities;
+@layer theme, base, utilities;
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant layerBase (&:where([data-layer="base"] *));
+
+@variant dark (:is(.dark) &:not(:is(.light *)));

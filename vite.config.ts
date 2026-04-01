@@ -6,8 +6,6 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import * as UasComps from '@vueuse/components'
-import { drop, lowerFirst, words } from 'es-toolkit'
-import openapiToDts from 'openapi-to-dts/vite'
 import RekaResolver from 'reka-ui/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Icons from 'unplugin-icons/vite'
@@ -20,11 +18,8 @@ import { envParse } from 'vite-plugin-env-parse'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
+  envDir: 'env',
   plugins: [
-    openapiToDts({
-      uri: 'http://localhost:3000/openapi/json',
-      writeTo: new URL('./types/auto/openapi.d.ts', import.meta.url),
-    }),
     vue(),
     tailwindcss(),
     VueI18nPlugin({
@@ -36,7 +31,7 @@ export default defineConfig({
         if (root.children.some(({ fullPath }) => !fullPath.endsWith('/:path(.*)'))) {
           const route404 = root.insert(
             ':path(.*)',
-            fileURLToPath(new URL('./src/components/molecule/http/404.vue', import.meta.url)).replaceAll(
+            fileURLToPath(new URL('./src/shared/molecule/http/Http404.vue', import.meta.url)).replaceAll(
               '\\',
               '/',
             ),
@@ -60,7 +55,14 @@ export default defineConfig({
     }),
 
     Components({
+      // directoryAsNamespace: false,
+      // dirs: [
+      //   // 'src/features',
+      //   'src/shared/atom',
+      //   'src/shared/molecule',
+      // ],
       dts: './types/auto/components.d.ts',
+      globs: ['src/shared/atom/**/*.vue', 'src/shared/molecule/**/*.vue'],
       resolvers: [
         RekaResolver({ prefix: 'Rk' }),
         (name) => {
@@ -84,6 +86,15 @@ export default defineConfig({
           },
           type: 'directive',
         },
+        // {
+        //   resolve: (name) => {
+        //     const path = hasInPaths(name, ['ts', 'tsx'])
+        //     if (path) {
+        //       return { from: path, name: 'default' }
+        //     }
+        //   },
+        //   type: 'directive',
+        // },
         ...Object.entries({
           '@formkit/auto-animate': ['vAutoAnimate'],
         } as Record<string, string[] | [string, string][]>).map(
@@ -135,29 +146,7 @@ export default defineConfig({
               type: 'component',
             } as ComponentResolverObject),
         ),
-        (name) => {
-          const paths = words(name)
-          if (!['Mol', 'In', 'Org'].includes(paths[0]))
-            return
-
-          paths[0] = paths[0]
-            .replace('Mol', 'molecule')
-            .replace('In', 'inorganic')
-            .replace('Org', 'organic')
-
-          return { from: `@/components/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
-
-          // switch (drop(paths, 1)[0]) {
-          //   case 'Mol':
-          //     return { from: `@/components/molecule/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
-          //   case 'In':
-          //     return { from: `@/components/inorganic/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
-          //   case 'Org':
-          //     return { from: `@/components/organic/${paths.map((p, i) => i === paths.length - 1 ? `${p}.vue` : lowerFirst(p)).join('/')}`, name: 'default', as: paths.at(-1) }
-          // }
-        },
       ],
-      globs: ['src/components/shadcn/**/*.vue', 'src/components/atom/*.vue'],
     }),
     AutoImport({
       dts: './types/auto/auto-imports.d.ts',
@@ -173,9 +162,13 @@ export default defineConfig({
         'vue',
         'pinia',
         {
+          '@/api/sysApi': [['sysApi', '$api']],
+          '@/lib/utils': [['cn', '$cn']],
           '@/locales/index.ts': [['global', '$i18n']],
+          '@/shared/molecule/useRequest': [['useRequest', '$req']],
           'vue-i18n': ['useI18n'],
-          '@/lib/utils': ['cn'],
+          'vue-sonner': [['toast', '$toast']],
+          'zod': [['*', 'z']],
         },
         VueRouterAutoImports,
       ],

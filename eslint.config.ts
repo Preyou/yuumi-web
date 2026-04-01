@@ -6,7 +6,44 @@ const compat = new FlatCompat()
 export default antfu(
   {
     formatters: true,
+    ignores: ['src/shared/ui/**/*'],
     jsonc: true,
+    rules: {
+      'antfu/no-top-level-await': 'off',
+
+      'antfu/top-level-function': 'error',
+      'arrow-body-style': 'off',
+
+      'curly': ['error', 'multi-line'],
+      'eslint-comments/no-unlimited-disable': 'off',
+      'func-style': 'off',
+      'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
+      'no-param-reassign': 'error',
+      'no-template-curly-in-string': 'off',
+      'no-unlimited-disable': 'off',
+      'object-shorthand': ['error', 'always'],
+      'perfectionist/sort-classes': [
+        'warn',
+        {
+          order: 'asc',
+          type: 'natural',
+        },
+      ],
+      'perfectionist/sort-objects': [
+        'warn',
+        {
+          order: 'asc',
+          type: 'natural',
+        },
+      ],
+
+      'prefer-arrow-callback': 'error',
+      'style/max-statements-per-line': ['error', { max: 2 }],
+      'tailwindcss/no-custom-classname': 0,
+    },
+    settings: {
+      tailwindcss: {},
+    },
     vue: {
       a11y: false,
       overrides: {
@@ -68,44 +105,8 @@ export default antfu(
       },
     },
     ...compat.config({
-      rules: {
-        'tailwindcss/no-custom-classname': 0,
-
-        'antfu/no-top-level-await': 'off',
-        'antfu/top-level-function': 'error',
-
-        'arrow-body-style': 'off',
-        'curly': ['error', 'multi-line'],
-        'eslint-comments/no-unlimited-disable': 'off',
-        'func-style': 'off',
-        'no-console': ['error', { allow: ['warn', 'error'] }],
-        'no-param-reassign': 'error',
-        'no-template-curly-in-string': 'off',
-        'no-unlimited-disable': 'off',
-        'object-shorthand': ['error', 'always'],
-
-        'perfectionist/sort-classes': [
-          'warn',
-          {
-            order: 'asc',
-            type: 'natural',
-          },
-        ],
-        'perfectionist/sort-objects': [
-          'warn',
-          {
-            order: 'asc',
-            type: 'natural',
-          },
-        ],
-        'prefer-arrow-callback': 'error',
-      },
-      settings: {
-        tailwindcss: {},
-      },
       extends: ['.eslintrc-auto-import.json'],
     }),
-    ignores: ['src/components/shadcn/**/*'],
   },
   tailwind.configs['flat/recommended'][0],
 )

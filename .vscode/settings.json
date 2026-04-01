@@ -8,6 +8,10 @@
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
+  // "path-intellisense.mappings": {
+  //   "@": "${workspaceFolder}/src",
+  //   "@client": "${workspaceFolder}/bindings/AgenticAI-Client/pkg"
+  // },
   // Silent the stylistic rules in you IDE, but still auto fix them
   // "eslint.rules.customizations": [
   //   {
@@ -64,7 +68,8 @@
     "jsonc",
     "yaml",
     "toml",
-    "css"
+    "css",
+    "tailwindcss"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
 
@@ -107,20 +112,33 @@
   // "i18n-ally.refactor.templates": [
   //   "$i18n.t('{key}')"
   // ],
+
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "vue.autoInsert.dotValue": true,
+  "vue.inlayHints.destructuredProps": true,
+  "vue.hover.rich": true,
+  "vue.inlayHints.inlineHandlerLeading": true,
+  "vue.inlayHints.missingProps": true,
+  "vue.inlayHints.vBindShorthand": true,
+  "tailwindcss-intellisense.trace.server": "verbose",
   "tailwindCSS.classAttributes": [
     "class",
     "className",
-    "ngClass",
-    "class:list",
     "icon",
     "enter-active-class",
     "leave-active-class",
     "enter-from-class",
     "enter-to-class",
     "leave-from-class",
-    "leave-to-class"
+    "leave-to-class",
+    "base-class",
+    "loading"
   ],
-  "editor.quickSuggestions": {
-    "strings": "on"
-  }
+  "tailwindCSS.classFunctions": [
+    "cn",
+    "$cn",
+    "cva"
+  ]
 }

@@ -6,6 +6,6 @@ definePage({
 
 <template>
   <div>
-    default page
+    theme
   </div>
 </template>

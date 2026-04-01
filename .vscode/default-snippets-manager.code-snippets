@@ -1,0 +1,19 @@
+{
+	"v3": {
+		"prefix": "v3",
+		"description": "v3",
+		"scope": "vue",
+		"body": [
+			"<script setup lang=\"ts\">",
+			"",
+			"</script>",
+			"",
+			"<template>",
+			"  <Atom base-class=\"$1\" >",
+			"    $2",
+			"  </Atom>",
+			"</template>",
+			""
+		]
+	}
+}

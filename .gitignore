@@ -22,5 +22,10 @@ dist-ssr
 *.sw?
 
 types/auto/*
+src/api/auto/
 .eslintrc-auto-import.json
 .cache
+.vite
+/.vitepress
+/doc/.vitepress/cache
+*.log
