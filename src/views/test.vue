@@ -11,5 +11,5 @@ function onSubmit(values: ZodOutput<typeof zPet>) {
 </script>
 
 <template>
-  <VeeForm @submit="onSubmit" />
+  <VeeForm @submit="onSubmit" class="p-8" />
 </template>

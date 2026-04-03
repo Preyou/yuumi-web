@@ -79,7 +79,7 @@
     "unplugin-icons": "^22.5.0",
     "unplugin-vue-components": "^30.0.0",
     "unplugin-vue-router": "^0.19.1",
-    "vite": "npm:rolldown-vite@7.2.5",
+    "vite": "^8.0.3",
     "vite-plugin-devtools-json": "^1.0.0",
     "vite-plugin-env-parse": "^1.0.15",
     "vite-plugin-vue-devtools": "^8.0.5",
