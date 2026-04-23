@@ -4,6 +4,7 @@ import type {
   UsePromiseBaseRunContext,
   UsePromiseBaseRunOptimisticUpdater,
 } from './usePromiseBase'
+import type { EventHookOn } from '@vueuse/core'
 import { usePromiseBase } from './usePromiseBase'
 
 /**
@@ -207,30 +208,30 @@ export interface UsePromiseFnReturns<
   refresh: () => Promise<Data>
 
   /** 订阅执行前事件。 */
-  onBefore: VueUse.EventHookOn<[
+  onBefore: EventHookOn<[
     params: [Params] extends [never] ? undefined : Params | undefined,
     abort: (reason?: unknown) => void,
   ]>
 
   /** 订阅成功事件。 */
-  onSuccess: VueUse.EventHookOn<[
+  onSuccess: EventHookOn<[
     data: Data,
     params: [Params] extends [never] ? undefined : Params,
   ]>
 
   /** 订阅错误事件。 */
-  onError: VueUse.EventHookOn<[
+  onError: EventHookOn<[
     error: Error,
     params: [Params] extends [never] ? undefined : Params | undefined,
   ]>
 
   /** 订阅结算事件。 */
-  onFinally: VueUse.EventHookOn<[
+  onFinally: EventHookOn<[
     params: [Params] extends [never] ? undefined : Params | undefined,
   ]>
 
   /** 订阅取消事件。 */
-  onCancel: VueUse.EventHookOn<[
+  onCancel: EventHookOn<[
     reason: unknown,
     params: [Params] extends [never] ? undefined : Params | undefined,
   ]>

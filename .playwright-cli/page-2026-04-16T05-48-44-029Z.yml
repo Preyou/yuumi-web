@@ -1,0 +1,31 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - generic [ref=e11]: Example
+        - list [ref=e13]:
+          - listitem [ref=e14]:
+            - link "Atom" [ref=e15] [cursor=pointer]:
+              - /url: /example/atom
+              - generic [ref=e17]: Atom
+          - listitem [ref=e18]:
+            - link "Molecule" [active] [ref=e19] [cursor=pointer]:
+              - /url: /example/molecule
+              - generic [ref=e21]: Molecule
+        - button "Toggle Sidebar" [ref=e22]
+      - main [ref=e23]:
+        - generic [ref=e24]:
+          - button "Toggle Sidebar" [ref=e25] [cursor=pointer]:
+            - img
+            - generic [ref=e26]: Toggle Sidebar
+          - generic [ref=e27]: Admin Example Layout
+        - generic [ref=e80]:
+          - heading "Molecule Components" [level=1] [ref=e81]
+          - paragraph [ref=e82]: 这里用于承载组合组件（molecule）的示例页面。
+    - region "Notifications alt+T":
+      - list
+  - generic [ref=e68]:
+    - generic "Toggle devtools panel" [ref=e69] [cursor=pointer]:
+      - img [ref=e70]
+    - generic "Toggle Component Inspector" [ref=e75] [cursor=pointer]:
+      - img [ref=e76]

@@ -4,11 +4,34 @@ import type { PathMap } from './auto'
 import type { InferAlovaGenerics } from './createApi'
 // import { router } from '@/router'
 import { axiosRequestAdapter } from '@alova/adapter-axios'
+import { useLocalStorage } from '@vueuse/core'
 import { createAlova } from 'alova'
 import { createClientTokenAuthentication } from 'alova/client'
+import { toast } from 'vue-sonner'
 import { createApi } from './createApi'
 
 const accessToken = useLocalStorage('access_token', '')
+
+interface ApiEnvelope {
+  code: number | string
+  data: unknown
+  message: string
+}
+
+function toApiEnvelope(value: unknown): ApiEnvelope {
+  return value as ApiEnvelope
+}
+
+function resolveNotifyMessage(value: unknown): string {
+  const response = toApiEnvelope(value)
+  const codeKey = `${response.code}`
+  return $i18n.te(codeKey) ? String($i18n.t(codeKey)) : response.message
+}
+
+function isBusinessSuccess(value: unknown): boolean {
+  const response = toApiEnvelope(value)
+  return `${response.code}` === '200'
+}
 
 const { onAuthRequired, onResponseRefreshToken } = createClientTokenAuthentication<StatesHook<any>, typeof axiosRequestAdapter>({
   assignToken: (method) => {
@@ -66,7 +89,7 @@ export const alovaInstance = createAlova({
       return data
     },
   }),
-  timeout: import.meta.env.VITE_API_Timeout,
+  timeout: import.meta.env.VITE_SysApiTimeout,
 })
 
 /**
@@ -75,8 +98,29 @@ export const alovaInstance = createAlova({
  * @remarks
  * 由 `createApi<PathMap, InferAlovaGenerics<typeof alovaInstance>>(alovaInstance)` 创建，调用形态：
  * `sysApi('/path').get({...})` / `sysApi('/path').post({...})`。
- * `PathMap` 仍由调用方显式指定；
+ * `PathMap` 来自 OpenAPI 生成类型；
  * 第二个泛型通过 `InferAlovaGenerics<typeof alovaInstance>` 提取，
  * 避免手写一整段 `AlovaGenerics<...>`。
  */
-export const sysApi = createApi<PathMap, InferAlovaGenerics<typeof alovaInstance>>(alovaInstance)
+export const sysApi = createApi<PathMap, InferAlovaGenerics<typeof alovaInstance>>(alovaInstance, {
+  notify: {
+    defaultError: true,
+    defaultSuccess: ({ method }) => {
+      const normalizedMethod = method.toLowerCase()
+      return normalizedMethod !== 'get' && normalizedMethod !== 'head' && normalizedMethod !== 'options'
+    },
+    getErrorMessage(response) {
+      return resolveNotifyMessage(response)
+    },
+    getSuccessMessage(response) {
+      return resolveNotifyMessage(response)
+    },
+    isBusinessSuccess,
+    onError(message) {
+      toast.error(message)
+    },
+    onSuccess(message) {
+      toast.success(message)
+    },
+  },
+})

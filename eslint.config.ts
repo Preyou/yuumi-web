@@ -108,5 +108,29 @@ export default antfu(
       extends: ['.eslintrc-auto-import.json'],
     }),
   },
-  tailwind.configs['flat/recommended'][0],
+  // {
+  //   files: ['src/**/*.{ts,tsx,vue}'],
+  //   rules: {
+  //     'no-restricted-imports': [
+  //       'error',
+  //       {
+  //         paths: [
+  //           {
+  //             importNames: ['h'],
+  //             message: 'h() is prohibited in app code. Use JSX/TSX render syntax instead.',
+  //             name: 'vue',
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //     'no-restricted-syntax': [
+  //       'error',
+  //       {
+  //         message: 'h() is prohibited in app code. Use JSX/TSX render syntax instead.',
+  //         selector: 'CallExpression[callee.name="h"]',
+  //       },
+  //     ],
+  //   },
+  // },
+  // tailwind.configs.recommended,
 )

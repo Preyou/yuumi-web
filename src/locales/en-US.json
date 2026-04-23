@@ -1,1 +1,75 @@
-{}
+{
+  "common": {
+    "language": "Language",
+    "theme": "Theme",
+    "colorMode": {
+      "dark": "Dark",
+      "light": "Light"
+    },
+    "themePreset": {
+      "default": "Default",
+      "ocean": "Ocean",
+      "forest": "Forest",
+      "sunset": "Sunset",
+      "midnight": "Midnight",
+      "rose": "Rose"
+    },
+    "locale": {
+      "enUS": "English",
+      "zhCN": "简体中文"
+    }
+  },
+  "auth": {
+    "title": "Yuumi Auth",
+    "subtitle": "Simple Register & Login",
+    "tabs": {
+      "login": "Login",
+      "register": "Register"
+    },
+    "form": {
+      "email": "Email",
+      "password": "Password",
+      "name": "Name",
+      "age": "Age",
+      "emailPlaceholder": "you{'@'}example.com",
+      "passwordPlaceholder": "Enter your password",
+      "registerPasswordPlaceholder": "At least 6 characters",
+      "namePlaceholder": "Enter your name"
+    },
+    "actions": {
+      "loginNow": "Sign In",
+      "registerNow": "Create Account",
+      "refreshProfile": "Refresh Profile",
+      "logout": "Sign Out"
+    },
+    "messages": {
+      "requestFailed": "Request failed, please try again later",
+      "loginFailed": "Login failed",
+      "loginSuccess": "Login successful",
+      "registerFailed": "Registration failed",
+      "registerSuccess": "Registration successful, please sign in",
+      "emailRegistered": "This email has already been registered",
+      "loggedOut": "Signed out",
+      "invalidLoginParams": "Invalid login form data",
+      "invalidRegisterParams": "Invalid registration form data"
+    },
+    "validation": {
+      "emailInvalid": "Please enter a valid email address",
+      "passwordMin": "Password must be at least 6 characters",
+      "passwordMax": "Password is too long",
+      "ageMin": "Age must be greater than 0",
+      "ageMax": "Age cannot be greater than 199",
+      "nameRequired": "Name is required",
+      "nameMax": "Name is too long"
+    },
+    "token": {
+      "title": "Current Token"
+    },
+    "profile": {
+      "id": "User ID",
+      "name": "Name",
+      "email": "Email",
+      "age": "Age"
+    }
+  }
+}

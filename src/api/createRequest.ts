@@ -10,7 +10,10 @@ import type {
   ApiUrls,
   CreateApiClient,
 } from '@/api/createApi'
-import type { UsePromiseBaseRunContext, UsePromiseFnOptions, UsePromiseFnReturns, UsePromiseFnWatchOption } from '@/shared/molecule/usePromiseFn'
+import type { UsePromiseBaseRunContext, UsePromiseFnOptions, UsePromiseFnReturns, UsePromiseFnWatchOption } from '@/shared/hooks/usePromiseFn'
+import type { Awaitable, EventHookOn } from '@vueuse/core'
+import { createEventHook } from '@vueuse/core'
+import { usePromiseFn } from '@/shared/hooks/usePromiseFn'
 
 /**
  * 分页状态快照。
@@ -162,7 +165,7 @@ export interface CreateRequestFactoryOptions extends RequestPromiseDefaultOption
    * @remarks
    * 与实例级 `onBefore` 并行执行。
    */
-  onBefore?: (params: unknown, abort: (reason?: unknown) => void) => VueUse.Awaitable<void>
+  onBefore?: (params: unknown, abort: (reason?: unknown) => void) => Awaitable<void>
   /** 工厂级取消回调。 */
   onCancel?: (reason: unknown, params: unknown) => void
   /** 工厂级错误回调。 */
@@ -197,7 +200,7 @@ export type RequestBeforeHandler<Params> = (
   params: Params | undefined,
   /** 调用可取消当前执行。 */
   abort: (reason?: unknown) => void,
-) => VueUse.Awaitable<void>
+) => Awaitable<void>
 
 /**
  * 通用事件处理函数签名。
@@ -261,9 +264,9 @@ export interface UseRequestTransportReturns<
   key: Readonly<Vue.Ref<string | undefined>>
 
   /** 订阅下载进度事件（0-1）。 */
-  onDownload: VueUse.EventHookOn<[progress: number]>
+  onDownload: EventHookOn<[progress: number]>
   /** 订阅上传进度事件（0-1）。 */
-  onUpload: VueUse.EventHookOn<[progress: number]>
+  onUpload: EventHookOn<[progress: number]>
   /** 上传进度（0-1）。 */
   uploadProgress: Readonly<Vue.Ref<number>>
 }

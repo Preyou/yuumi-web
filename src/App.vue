@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import theme from '@/assets/themes/default.json'
+import { useThemeState } from '@/shared/molecule/theme/useTheme'
 import { Toaster } from '@/shared/ui/sonner'
 import 'vue-sonner/style.css'
 
-// const isDark = useDark()
-
-// isDark.value = !isDark.value
+const { currentTheme, isDark } = useThemeState()
 </script>
 
 <template>
-  <ThemeProvider :theme global>
+  <ThemeProvider :theme="currentTheme" :is-dark="isDark" global>
     <RouterView />
+    <ThemeEditorShell />
     <Toaster position="top-right" />
   </ThemeProvider>
 </template>

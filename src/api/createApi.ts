@@ -29,6 +29,84 @@ export interface ApiRequestProgress {
   total: number
 }
 
+export interface ApiRequestNotifyOptions {
+  /**
+   * 是否展示成功提示。
+   *
+   * @remarks
+   * 优先级高于 `createApi(..., { notify })` 中的默认策略。
+   */
+  success?: boolean
+  /**
+   * 是否展示失败提示。
+   *
+   * @remarks
+   * 优先级高于 `createApi(..., { notify })` 中的默认策略。
+   */
+  error?: boolean
+  /**
+   * 成功提示文案覆盖。
+   */
+  successMessage?: string
+  /**
+   * 失败提示文案覆盖。
+   */
+  errorMessage?: string
+}
+
+export interface ApiNotifyContext {
+  forceRequest: boolean
+  key?: string
+  method: string
+  url: string
+}
+
+export interface ApiNotifyOptions {
+  /**
+   * 默认是否展示失败提示。
+   *
+   * @defaultValue `true`
+   */
+  defaultError?: boolean | ((context: ApiNotifyContext) => boolean)
+  /**
+   * 默认是否展示成功提示。
+   *
+   * @defaultValue 非 `GET/HEAD/OPTIONS` 请求为 `true`，其余为 `false`
+   */
+  defaultSuccess?: boolean | ((context: ApiNotifyContext) => boolean)
+  /**
+   * 错误文案解析器。
+   */
+  getErrorMessage?: (response: unknown | undefined, error: unknown, context: ApiNotifyContext) => string
+  /**
+   * 成功文案解析器。
+   */
+  getSuccessMessage?: (response: unknown, context: ApiNotifyContext) => string
+  /**
+   * 业务成功判定。
+   *
+   * @remarks
+   * 默认返回 `true`（仅网络错误会进入失败提示链路）。
+   */
+  isBusinessSuccess?: (response: unknown, context: ApiNotifyContext) => boolean
+  /**
+   * 失败提示分发器（如 `toast.error`）。
+   */
+  onError?: (message: string, context: ApiNotifyContext & { error: unknown, response?: unknown }) => void
+  /**
+   * 成功提示分发器（如 `toast.success`）。
+   */
+  onSuccess?: (message: string, context: ApiNotifyContext & { response: unknown }) => void
+  /**
+   * 最终提示开关（支持统一静默规则）。
+   */
+  shouldNotify?: (
+    phase: 'error' | 'success',
+    context: ApiNotifyContext,
+    requestNotify: false | ApiRequestNotifyOptions | undefined,
+  ) => boolean
+}
+
 export interface ApiRequestControlOptions {
   forceRequest?: boolean
   key?: string
@@ -36,6 +114,13 @@ export interface ApiRequestControlOptions {
    * Method 实例创建后触发，可用于访问最终 Method（含自动生成与手动覆盖 key 后的实例）。
    */
   onMethodCreated?: (methodInstance: AlovaMethod) => void
+  /**
+   * 单请求自动提示控制。
+   *
+   * @remarks
+   * 传 `false` 可完全关闭该请求的自动提示。
+   */
+  notify?: false | ApiRequestNotifyOptions
   onDownload?: (progress: ApiRequestProgress) => void
   onUpload?: (progress: ApiRequestProgress) => void
   signal?: AbortSignal
@@ -127,6 +212,10 @@ function defaultResolvePath(url: string, path?: ApiPathParams): string {
   )
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
+
 function toAbortError(reason: unknown): Error {
   if (reason instanceof Error) {
     return reason
@@ -143,7 +232,81 @@ function toAbortError(reason: unknown): Error {
   return error
 }
 
+function isAbortLikeError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false
+  }
+
+  if (error.name === 'AbortError') {
+    return true
+  }
+
+  const message = error.message.toLowerCase()
+  return message.includes('abort') || message.includes('cancel')
+}
+
+function isMutationMethod(method: string): boolean {
+  const normalizedMethod = method.toLowerCase()
+  return normalizedMethod !== 'get' && normalizedMethod !== 'head' && normalizedMethod !== 'options'
+}
+
+function resolveDefaultNotifyEnabled(
+  phase: 'error' | 'success',
+  context: ApiNotifyContext,
+  notify: ApiNotifyOptions,
+): boolean {
+  const configuredDefault = phase === 'success' ? notify.defaultSuccess : notify.defaultError
+  if (typeof configuredDefault === 'function') {
+    return configuredDefault(context)
+  }
+  if (typeof configuredDefault === 'boolean') {
+    return configuredDefault
+  }
+
+  if (phase === 'success') {
+    return isMutationMethod(context.method)
+  }
+  return true
+}
+
+function resolveRequestNotifyEnabled(
+  phase: 'error' | 'success',
+  context: ApiNotifyContext,
+  notify: ApiNotifyOptions,
+  requestNotify: false | ApiRequestNotifyOptions | undefined,
+): boolean {
+  if (requestNotify === false) {
+    return false
+  }
+
+  const requestOverride = phase === 'success' ? requestNotify?.success : requestNotify?.error
+  const enabled = typeof requestOverride === 'boolean'
+    ? requestOverride
+    : resolveDefaultNotifyEnabled(phase, context, notify)
+
+  if (!enabled) {
+    return false
+  }
+
+  return notify.shouldNotify?.(phase, context, requestNotify) ?? true
+}
+
+function extractErrorResponse(error: unknown): unknown {
+  if (!isRecord(error)) {
+    return undefined
+  }
+  const response = error.response
+  if (!isRecord(response)) {
+    return undefined
+  }
+  return response.data
+}
+
 interface CreateApiOptions {
+  /**
+   * 自动提示策略（提示文案解析 + 提示分发）。
+   */
+  notify?: ApiNotifyOptions
   /**
    * 自定义路径参数替换逻辑。
    *
@@ -163,6 +326,7 @@ interface CreateApiOptions {
  *
  * @param alovaInstance alova 实例。
  * @param options 可选配置；可覆盖路径参数替换逻辑。
+ * @param options.notify 自动提示策略（提示开关、文案解析、提示分发）。
  * @param options.resolvePath 路径解析器，默认会替换 `{key}` 并对值做 URL 编码。
  * @returns 类型安全的 `api` 客户端，调用形态为 `api(url).[method](arg)`。
  *
@@ -191,7 +355,7 @@ export function createApi<
   AG extends AlovaGenerics,
 >(
   alovaInstance: Alova<AG>,
-  { resolvePath = defaultResolvePath }: CreateApiOptions = {},
+  { notify: notifyOptions, resolvePath = defaultResolvePath }: CreateApiOptions = {},
 ): CreateApiClient<PathMap, AG> {
   return ((url: ApiUrls<PathMap>) => new Proxy({}, {
     get: (_, methodKey) => {
@@ -199,6 +363,7 @@ export function createApi<
         const {
           forceRequest = false,
           key,
+          notify: requestNotify,
           onDownload,
           onMethodCreated,
           onUpload,
@@ -221,8 +386,102 @@ export function createApi<
         onDownload && methodInstance.onDownload(onDownload)
         onUpload && methodInstance.onUpload(onUpload)
 
+        const notifyContext: ApiNotifyContext = {
+          forceRequest,
+          key: typeof key === 'string' ? key : undefined,
+          method: String(methodKey),
+          url: String(url),
+        }
+
+        const getCustomMessage = (phase: 'error' | 'success'): string | undefined => {
+          if (requestNotify === false) {
+            return undefined
+          }
+          const customMessage = phase === 'success' ? requestNotify?.successMessage : requestNotify?.errorMessage
+          if (typeof customMessage !== 'string') {
+            return undefined
+          }
+
+          const trimmed = customMessage.trim()
+          return trimmed ? trimmed : undefined
+        }
+
+        const emitSuccessNotify = (response: unknown) => {
+          if (!notifyOptions?.onSuccess) {
+            return
+          }
+          if (!resolveRequestNotifyEnabled('success', notifyContext, notifyOptions, requestNotify)) {
+            return
+          }
+
+          const message = getCustomMessage('success')
+            ?? notifyOptions.getSuccessMessage?.(response, notifyContext)
+          if (message === undefined) {
+            throw new Error('[createApi.notify] success message is required when success notify is enabled')
+          }
+
+          const normalizedMessage = message.trim()
+          if (!normalizedMessage) {
+            throw new Error('[createApi.notify] success message cannot be empty')
+          }
+
+          notifyOptions.onSuccess(normalizedMessage, {
+            ...notifyContext,
+            response,
+          })
+        }
+
+        const emitErrorNotify = (response: unknown | undefined, error: unknown) => {
+          if (!notifyOptions?.onError || isAbortLikeError(error)) {
+            return
+          }
+          if (!resolveRequestNotifyEnabled('error', notifyContext, notifyOptions, requestNotify)) {
+            return
+          }
+
+          const message = getCustomMessage('error')
+            ?? notifyOptions.getErrorMessage?.(response, error, notifyContext)
+          if (message === undefined) {
+            throw new Error('[createApi.notify] error message is required when error notify is enabled')
+          }
+
+          const normalizedMessage = message.trim()
+          if (!normalizedMessage) {
+            throw new Error('[createApi.notify] error message cannot be empty')
+          }
+
+          notifyOptions.onError(normalizedMessage, {
+            ...notifyContext,
+            error,
+            response,
+          })
+        }
+
+        const executeRequest = () => {
+          return methodInstance
+            .send(forceRequest)
+            .then((response) => {
+              if (!notifyOptions) {
+                return response
+              }
+
+              const isBusinessSuccess = notifyOptions.isBusinessSuccess?.(response, notifyContext) ?? true
+              if (isBusinessSuccess) {
+                emitSuccessNotify(response)
+              }
+              else {
+                emitErrorNotify(response, response)
+              }
+              return response
+            })
+            .catch((error: unknown) => {
+              emitErrorNotify(extractErrorResponse(error), error)
+              return Promise.reject(error)
+            })
+        }
+
         if (!signal) {
-          return methodInstance.send(forceRequest)
+          return executeRequest()
         }
 
         if (signal.aborted) {
@@ -237,8 +496,7 @@ export function createApi<
         }
 
         signal.addEventListener('abort', abortBySignal, { once: true })
-        return methodInstance
-          .send(forceRequest)
+        return executeRequest()
           .finally(() => {
             signal.removeEventListener('abort', abortBySignal)
           })

@@ -71,7 +71,6 @@
     "css",
     "tailwindcss"
   ],
-  "typescript.tsdk": "node_modules/typescript/lib",
 
   "files.associations": {
     "*.page-template": "vue",
@@ -140,5 +139,9 @@
     "cn",
     "$cn",
     "cva"
-  ]
+  ],
+  "iconify.suffixes": [
+    ""
+  ],
+  "iconify.prefixes": []
 }

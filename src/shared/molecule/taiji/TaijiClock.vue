@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useDateFormat, useNow } from '@vueuse/core'
 import nzh from 'nzh/cn'
 import Circle from './_/Circle.vue'
 

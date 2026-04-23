@@ -1,7 +1,7 @@
 # P0-NAMING-AND-DIRECTORY
 
 Priority: P0
-Scope: `packages/web/src/**`
+Scope: `src/**`
 
 ## Rule
 - 文件夹使用小驼峰命名。

@@ -29,3 +29,5 @@ src/api/auto/
 /.vitepress
 /doc/.vitepress/cache
 *.log
+
+output

@@ -1,11 +1,11 @@
 # P1-DELIVERY-CHECKLIST
 
 Priority: P1
-Scope: `packages/web/**`
+Scope: `**`
 
 ## Rule
 - 完成开发任务前，应执行最小交付检查。
-- 最小必选检查命令为：`bun run --filter @yuumi/web type-check`（或在 `packages/web` 内执行 `bun run type-check`）。
+- 最小必选检查命令为：`bun run type-check`。
 - `type-check` 未通过前，变更不视为完成。
 - 完成任务时需记录本次执行的检查命令与结果。
 

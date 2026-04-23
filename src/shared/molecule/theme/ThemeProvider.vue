@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useCurrentElement } from '@vueuse/core'
+import { themeProviderPortalTargetKey } from './themeProviderPortal'
+
 const { global, isDark, theme = {} } = defineProps<{
   theme?: {
     light?: Record<string, string>
@@ -9,6 +12,8 @@ const { global, isDark, theme = {} } = defineProps<{
 }>()
 
 const atomEl = useCurrentElement<HTMLElement>()
+
+provide(themeProviderPortalTargetKey, atomEl)
 
 watchEffect(() => {
   const el = global ? document.body : atomEl.value
@@ -29,7 +34,9 @@ watchEffect(() => {
 </script>
 
 <template>
-  <Atom base-class="size-full bg-background">
-    <slot />
+  <Atom base-class="relative flex size-full min-h-0 min-w-0 overflow-hidden bg-background">
+    <div class="min-h-0 min-w-0 flex-1">
+      <slot />
+    </div>
   </Atom>
 </template>

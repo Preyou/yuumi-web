@@ -1,7 +1,7 @@
 # P0-TYPESCRIPT-CORE
 
 Priority: P0
-Scope: `packages/web/src/**`, `packages/web/types/**`
+Scope: `src/**`, `types/**`
 
 ## Rule
 - 仅使用 TypeScript，不使用 JavaScript。

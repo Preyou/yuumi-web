@@ -1,0 +1,127 @@
+- generic:
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: Example
+              - generic:
+                - list:
+                  - listitem:
+                    - link:
+                      - /url: /example/atom
+                      - generic: Atom
+                    - list:
+                      - listitem:
+                        - link:
+                          - /url: /example/atom/button
+                          - generic: Button
+                  - listitem:
+                    - link:
+                      - /url: /example/molecule
+                      - generic: Molecule
+                    - list:
+                      - listitem:
+                        - link:
+                          - /url: /example/molecule/basic
+                          - generic: Basic
+              - button
+        - main:
+          - generic:
+            - generic:
+              - button:
+                - img
+                - generic: Toggle Sidebar
+              - navigation:
+                - list:
+                  - listitem:
+                    - link:
+                      - /url: /example
+                      - text: Example
+                  - listitem:
+                    - link:
+                      - /url: /example/atom
+                      - text: Atom
+                  - listitem:
+                    - generic: Button
+            - generic:
+              - generic:
+                - generic: 语言
+                - combobox:
+                  - generic: 简体中文
+                  - img
+              - generic:
+                - generic: 主题
+                - generic:
+                  - combobox [expanded]:
+                    - generic: 默认
+                    - img
+              - generic:
+                - generic: 浅色
+                - switch
+          - generic:
+            - generic:
+              - generic:
+                - heading [level=1]: Atom Components
+                - paragraph: 基础组件示例与交互演示。
+              - navigation:
+                - link:
+                  - /url: /example/atom/button
+                  - text: Button
+              - generic:
+                - generic:
+                  - heading [level=2]: Button.vue 用法示例
+                  - paragraph:
+                    - text: 组件来源：
+                    - code: src/shared/atom/Button.vue
+                - generic:
+                  - heading [level=3]: 1. 基础样式
+                  - generic:
+                    - button: Default
+                    - button: Secondary
+                    - button: Outline
+                    - button: Ghost
+                    - button: Link
+                - generic:
+                  - heading [level=3]: 2. Intent 语义色
+                  - generic:
+                    - button: Brand
+                    - button: Success
+                    - button: Warning
+                    - button: Info
+                    - button: Destructive
+                - generic:
+                  - heading [level=3]: 3. Size 与状态
+                  - generic:
+                    - button: Small
+                    - button: Default
+                    - button: Large
+                    - button [disabled] [ref=e109]:
+                      - status
+                      - text: Loading
+                    - button [disabled] [ref=e110]: Disabled
+                - generic:
+                  - heading [level=3]: 4. Block 按钮
+                  - generic:
+                    - button: Block Button
+      - region "Notifications alt+T":
+        - list
+  - generic:
+    - generic:
+      - img
+    - generic:
+      - img
+  - listbox [ref=e111]:
+    - option "默认" [active] [selected] [ref=e112]:
+      - generic [ref=e114]:
+        - img
+      - generic [ref=e115]: 默认
+    - option "海洋" [ref=e116]:
+      - generic [ref=e118]: 海洋
+    - option "森林" [ref=e119]:
+      - generic [ref=e121]: 森林
+    - option "落日" [ref=e122]:
+      - generic [ref=e124]: 落日

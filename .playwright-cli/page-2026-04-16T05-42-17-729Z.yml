@@ -1,0 +1,44 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - heading "Button.vue 用法示例" [level=2] [ref=e6]
+        - paragraph [ref=e7]:
+          - text: 组件来源：
+          - code [ref=e8]: src/shared/atom/Button.vue
+      - generic [ref=e9]:
+        - heading "1. 基础样式" [level=3] [ref=e10]
+        - generic [ref=e11]:
+          - button "Default" [ref=e12] [cursor=pointer]
+          - button "Secondary" [ref=e13] [cursor=pointer]
+          - button "Outline" [ref=e14] [cursor=pointer]
+          - button "Ghost" [ref=e15] [cursor=pointer]
+          - button "Link" [ref=e16] [cursor=pointer]
+      - generic [ref=e17]:
+        - heading "2. Intent 语义色" [level=3] [ref=e18]
+        - generic [ref=e19]:
+          - button "Brand" [ref=e20] [cursor=pointer]
+          - button "Success" [ref=e21] [cursor=pointer]
+          - button "Warning" [ref=e22] [cursor=pointer]
+          - button "Info" [ref=e23] [cursor=pointer]
+          - button "Destructive" [ref=e24] [cursor=pointer]
+      - generic [ref=e25]:
+        - heading "3. Size 与状态" [level=3] [ref=e26]
+        - generic [ref=e27]:
+          - button "Small" [ref=e28] [cursor=pointer]
+          - button "Default" [ref=e29] [cursor=pointer]
+          - button "Large" [ref=e30] [cursor=pointer]
+          - button "Loading" [disabled] [ref=e31]:
+            - status
+            - text: Loading
+          - button "Disabled" [disabled] [ref=e32]
+      - generic [ref=e33]:
+        - heading "4. Block 按钮" [level=3] [ref=e34]
+        - button "Block Button" [ref=e36] [cursor=pointer]
+    - region "Notifications alt+T":
+      - list
+  - generic [ref=e37]:
+    - generic "Toggle devtools panel" [ref=e38] [cursor=pointer]:
+      - img [ref=e39]
+    - generic "Toggle Component Inspector" [ref=e44] [cursor=pointer]:
+      - img [ref=e45]

@@ -1,7 +1,7 @@
 # P1-API-PAGINATION-CONSISTENCY
 
 Priority: P1
-Scope: `packages/web/src/api/**`, 依赖分页能力的页面与组件
+Scope: `src/api/**`, 依赖分页能力的页面与组件
 
 ## Rule
 - 前端请求分页参数统一为 `page`、`pageSize`，并与后端分页协议保持一致。

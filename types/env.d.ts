@@ -1,4 +1,8 @@
 /// <reference types="vite/client" />
+interface ImportMetaEnv {
+  readonly APP_NAME: string
+}
+
 /* eslint-disable perfectionist/sort-exports */
 import 'vue-router/auto-routes'
 import 'vue-router'

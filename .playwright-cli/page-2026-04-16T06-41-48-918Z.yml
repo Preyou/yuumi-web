@@ -1,0 +1,55 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e16]:
+      - generic [ref=e19]:
+        - generic [ref=e23]: Example
+        - list [ref=e25]:
+          - listitem [ref=e26]:
+            - button "Atom" [ref=e27] [cursor=pointer]:
+              - generic [ref=e29]: Atom
+            - list [ref=e30]:
+              - listitem [ref=e31]:
+                - link "Button" [ref=e32] [cursor=pointer]:
+                  - /url: /example/atom/button
+                  - generic [ref=e33]: Button
+          - listitem [ref=e34]:
+            - button "Molecule" [ref=e35] [cursor=pointer]:
+              - generic [ref=e37]: Molecule
+            - list [ref=e38]:
+              - listitem [ref=e39]:
+                - link "Basic" [active] [ref=e40] [cursor=pointer]:
+                  - /url: /example/molecule/basic
+                  - generic [ref=e41]: Basic
+        - button "Toggle Sidebar" [ref=e42]
+      - main [ref=e43]:
+        - generic [ref=e44]:
+          - button "Toggle Sidebar" [ref=e45] [cursor=pointer]:
+            - img
+            - generic [ref=e46]: Toggle Sidebar
+          - navigation "Breadcrumb" [ref=e47]:
+            - list [ref=e48]:
+              - listitem [ref=e49]:
+                - link "Example" [ref=e50] [cursor=pointer]:
+                  - /url: /example
+              - listitem [ref=e97]:
+                - link "Molecule" [ref=e98] [cursor=pointer]:
+                  - /url: /example/molecule
+              - listitem [ref=e100]:
+                - generic [ref=e101]: Basic
+        - generic [ref=e102]:
+          - generic [ref=e103]:
+            - heading "Molecule Components" [level=1] [ref=e104]
+            - paragraph [ref=e105]: 组合组件示例与交互演示。
+          - navigation [ref=e106]:
+            - link "Basic" [ref=e107] [cursor=pointer]:
+              - /url: /example/molecule/basic
+          - generic [ref=e108]:
+            - heading "Molecule Basic 示例" [level=2] [ref=e109]
+            - paragraph [ref=e110]: 这里用于承载组合组件（molecule）的基础示例内容。
+    - region "Notifications alt+T":
+      - list
+  - generic [ref=e4]:
+    - generic "Toggle devtools panel" [ref=e5] [cursor=pointer]:
+      - img [ref=e6]
+    - generic "Toggle Component Inspector" [ref=e11] [cursor=pointer]:
+      - img [ref=e12]

@@ -1,2 +1,6 @@
 export * from './createField'
-export * from './createForm'
+export * from './createSchemaField'
+export * from './createSchemaForm'
+export { default as SchemaField } from './SchemaField.vue'
+export * from './schemaField.parse'
+export * from './schemaField.types'

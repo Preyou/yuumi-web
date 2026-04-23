@@ -136,8 +136,7 @@ export const definePathsPlugin = definePluginConfig({
 })
 
 export default defineConfig({
-  input:
-    'https://raw.githubusercontent.com/swagger-api/swagger-petstore/master/src/main/resources/openapi.yaml',
+  input: 'http://127.0.0.1:3000/api/openapi/json/json',
   output: {
     path: './src/api/auto',
     postProcess: ['prettier', 'eslint'],

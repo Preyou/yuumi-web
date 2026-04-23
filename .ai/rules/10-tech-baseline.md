@@ -1,11 +1,11 @@
 # P0-TECH-BASELINE
 
 Priority: P0
-Scope: `packages/web/**`
+Scope: `**`
 
 ## Rule
 - 技术基线为 TypeScript、Bun、Vue 3、Vite、shadcn-vue、reka-ui、VueUse、Tailwind CSS。
-- `packages/web` 的包管理与运行时统一使用 `bun`。
+- 当前仓库的包管理与运行时统一使用 `bun`。
 - 默认保持模板工程定位，优先保证结构清晰与可复用性。
 
 ## Non-Goals

@@ -1,7 +1,7 @@
 # P0-VUE-COMPONENT-LAYERING
 
 Priority: P0
-Scope: `packages/web/src/**`
+Scope: `src/**`
 
 ## Rule
 - 必须使用 Vue 3 组合式 API。
@@ -21,7 +21,13 @@ Scope: `packages/web/src/**`
 - `.vue` 中涉及渲染函数时，优先 `<script setup lang="tsx">` 与 TSX 表达。
 - 表单校验使用 `zod v4`。
 - `props`、`emits`、`slots` 必须类型化定义。
-- `defineProps` 需要默认值时，优先使用解构写法（存在明确类型冲突或用户覆盖除外）。
+- `defineProps` 需要默认值时，必须使用解构赋默认值，禁止 `withDefaults`。
+- 默认值只在 `undefined` 缺失语义下生效；`null` 视为显式值，不得被默认值覆盖。
+- `defineProps` 默认采用最小解构：仅解构“需要默认值的字段”或“脚本逻辑确需使用的少量字段”。
+- 仅在模板中使用且无需默认值的 props，不做解构，直接在模板中使用。
+- 默认情况下，脚本中使用到的 props 必须显式解构后再使用，不写 `props.xxx`。
+- 透传封装例外：允许 `const props = defineProps<...>()` 或 `const { xxx, ...props } = defineProps<...>()`，用于 `v-bind` 透传。
+- 透传封装例外中，透传对象仅用于下传，不用于业务判断、派生计算或再次默认值回填。
 - 路由采用文件路由，`src/views` 下文件自动生成路由。
 
 ## Non-Goals
@@ -30,6 +36,7 @@ Scope: `packages/web/src/**`
 
 ## Exceptions
 - 第三方 API 强制要求 `h()` 或非 TSX 方式时，可例外处理并注明原因。
+- 仅当已确认存在编译器或三方类型限制、无法安全使用解构默认值时，才可临时使用 `withDefaults`，并在实现附近注明原因与后续回收条件。
 
 ## Checks
 - 检查 UI 实现是否遵守组件复用顺序。
@@ -40,3 +47,7 @@ Scope: `packages/web/src/**`
 - 检查是否存在可复用组件却直接写原生控件的情况。
 - 检查新增表单是否使用 `zod v4` 且具备类型化定义。
 - 检查渲染函数是否优先 TSX。
+- 检查 `defineProps` 默认值是否通过解构赋值实现，是否出现 `withDefaults`。
+- 检查 `defineProps` 是否遵循“最小解构”或“透传例外”两类模式。
+- 检查“仅模板使用且无默认值”的 props 是否被不必要解构。
+- 检查脚本中是否出现不必要的 `props.xxx` 访问风格（透传例外除外）。

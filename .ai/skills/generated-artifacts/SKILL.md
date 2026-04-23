@@ -1,7 +1,7 @@
 # Generated Artifacts
 
 ## Purpose
-- 统一处理 `packages/web` 中“必须由脚本或工具生成”的文件，避免手改生成物。
+- 统一处理当前仓库中“必须由脚本或工具生成”的文件，避免手改生成物。
 
 ## Use When
 - 需求涉及 `src/api/auto/**`、`types/auto/**`、`src/shared/ui/**`。
@@ -11,15 +11,14 @@
 ## Workflow
 1. 先判断目标是否属于生成物目录。
 2. 若是 OpenAPI 生成：
-   - 在仓库根执行：`bun run --filter @yuumi/web openapi-ts`
-   - 或在 `packages/web` 执行：`bun run openapi-ts`
+   - 在当前仓库执行：`bun run openapi-ts`
    - OpenAPI 源地址严格使用用户配置值，不做自动切换或回退。
    - 不接受会话口头临时覆盖地址；如需切换地址，先按用户要求修改配置文件。
 3. 若是 `src/shared/ui/**` 缺失组件：
    - 执行：`bunx --bun shadcn-vue@latest add <component>`
 4. 生成后只在业务目录做适配封装，避免直接手改生成目录。
 5. 默认不提交 `src/api/auto/**` 与 `types/auto/**` 改动；确需提交先询问用户。
-6. 执行：`bun run --filter @yuumi/web type-check`。
+6. 执行：`bun run type-check`。
 7. 交付时记录：执行命令、生成结果、验证结果。
 
 ## Network Policy

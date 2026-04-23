@@ -1,4 +1,6 @@
 import { delay as sleep } from 'es-toolkit/promise'
+import type { Awaitable, EventHookOn } from '@vueuse/core'
+import { createEventHook } from '@vueuse/core'
 import { normalizeError } from '@/lib/helper'
 
 /**
@@ -175,7 +177,7 @@ export interface UsePromiseBaseOptions<Params, Data, DataValue> {
   onBefore?: (
     params: Params | undefined,
     abort: (reason?: unknown) => void,
-  ) => VueUse.Awaitable<void>
+  ) => Awaitable<void>
 
   /** 取消时回调。 */
   onCancel?: (reason: unknown, params: Params | undefined) => void
@@ -245,18 +247,18 @@ export interface UsePromiseBaseReturns<Params, Data, DataValue> {
   notifyCancel: (reason: unknown, params: Params | undefined) => void
 
   /** 订阅执行前事件。 */
-  onBefore: VueUse.EventHookOn<[
+  onBefore: EventHookOn<[
     params: Params | undefined,
     abort: (reason?: unknown) => void,
   ]>
   /** 订阅取消事件。 */
-  onCancel: VueUse.EventHookOn<[reason: unknown, params: Params | undefined]>
+  onCancel: EventHookOn<[reason: unknown, params: Params | undefined]>
   /** 订阅错误事件。 */
-  onError: VueUse.EventHookOn<[error: Error, params: Params | undefined]>
+  onError: EventHookOn<[error: Error, params: Params | undefined]>
   /** 订阅完成事件。 */
-  onFinally: VueUse.EventHookOn<[params: Params | undefined]>
+  onFinally: EventHookOn<[params: Params | undefined]>
   /** 订阅成功事件。 */
-  onSuccess: VueUse.EventHookOn<[data: Data, params: Params]>
+  onSuccess: EventHookOn<[data: Data, params: Params]>
 
   /** 当前并发中的调用数量。 */
   pendingCount: Readonly<Vue.Ref<number>>

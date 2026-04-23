@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePage({
-  redirect: '/home',
+  redirect: '/auth',
 })
 </script>
 

@@ -1,12 +1,12 @@
 # P0-AI-TASK-SOP
 
 Priority: P0
-Scope: `packages/web/**`
+Scope: `**`
 
 ## Rule
 - AI 执行开发任务时，必须遵循固定流程：
   1. 先评审需求合理性与风险（复用冲突、性能风险、安全风险、规则冲突）。
-  2. 先检索可复用能力（`shared/molecule` 与 `shared/atom` -> `shared/ui` -> `reka-ui` -> 原生）。
+  2. 先检索可复用能力（`shared/molecule` 与 `shared/atom` -> `shared/ui` -> `VueUse` -> `reka-ui` -> 原生；在“VueUse 可满足 vs 手写实现”场景下必须优先 VueUse）。
   3. 在写入边界内做最小改动实现，避免无收益抽象。
   4. 涉及生成物时，优先执行对应脚本，不手改生成目录。
   5. 至少执行 `type-check` 验证并记录结果。

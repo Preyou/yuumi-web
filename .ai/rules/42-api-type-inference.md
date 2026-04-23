@@ -1,7 +1,7 @@
 # P0-API-TYPE-INFERENCE
 
 Priority: P0
-Scope: `packages/web/src/api/**`, `packages/web/src/**`
+Scope: `src/api/**`, `src/**`
 
 ## Rule
 - 接口参数与返回类型必须优先使用 `src/api/auto` 与 `@/api/createApi` 导出的工具类型推导。

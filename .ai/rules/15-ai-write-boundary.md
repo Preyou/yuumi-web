@@ -1,7 +1,7 @@
 # P0-AI-WRITE-BOUNDARY
 
 Priority: P0
-Scope: `packages/web/**`
+Scope: `**`
 
 ## Rule
 - AI 改动必须遵循目录写入边界，默认仅可直接修改：
@@ -16,6 +16,7 @@ Scope: `packages/web/**`
   - `src/assets/**`
   - `types/env.d.ts`
   - `.ai/**`
+  - `../../.memory/*.md`（工作区根目录 AI 中间记忆，仅限当前会话以 `CODEX_THREAD_ID` 命名的专属文件）
 - 以下目录默认只读，禁止手改：
   - `src/api/auto/**`
   - `types/auto/**`
@@ -33,6 +34,9 @@ Scope: `packages/web/**`
 
 ## Checks
 - 检查改动文件路径是否落在允许目录内。
+- 检查对 `../../.memory/*.md` 的改动是否仅用于 AI 中间记忆，而非正式业务文件。
+- 检查对 `../../.memory/*.md` 的写入、删除是否仅作用于当前会话以 `CODEX_THREAD_ID` 命名的专属文件。
+- 检查当前会话专属记忆文件名是否保持为 `../../.memory/<CODEX_THREAD_ID>.md`。
 - 检查是否误改 `src/api/auto/**` 与 `types/auto/**`。
 - 检查“阻断级 bug”判定是否满足定义标准。
 - 检查 `src/shared/ui/**` 的改动是否满足“先生成后复用”或“阻断级 bug + 用户确认”。

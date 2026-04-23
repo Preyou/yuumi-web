@@ -1,1 +1,75 @@
-{}
+{
+  "common": {
+    "language": "语言",
+    "theme": "主题",
+    "colorMode": {
+      "dark": "深色",
+      "light": "浅色"
+    },
+    "themePreset": {
+      "default": "默认",
+      "ocean": "海洋",
+      "forest": "森林",
+      "sunset": "落日",
+      "midnight": "夜幕",
+      "rose": "玫瑰"
+    },
+    "locale": {
+      "enUS": "English",
+      "zhCN": "简体中文"
+    }
+  },
+  "auth": {
+    "title": "Yuumi 认证",
+    "subtitle": "简易注册与登录",
+    "tabs": {
+      "login": "登录",
+      "register": "注册"
+    },
+    "form": {
+      "email": "邮箱",
+      "password": "密码",
+      "name": "姓名",
+      "age": "年龄",
+      "emailPlaceholder": "you{'@'}example.com",
+      "passwordPlaceholder": "请输入密码",
+      "registerPasswordPlaceholder": "至少 6 位",
+      "namePlaceholder": "请输入姓名"
+    },
+    "actions": {
+      "loginNow": "立即登录",
+      "registerNow": "立即注册",
+      "refreshProfile": "刷新资料",
+      "logout": "退出登录"
+    },
+    "messages": {
+      "requestFailed": "请求失败，请稍后再试",
+      "loginFailed": "登录失败",
+      "loginSuccess": "登录成功",
+      "registerFailed": "注册失败",
+      "registerSuccess": "注册成功，请登录",
+      "emailRegistered": "邮箱已被注册",
+      "loggedOut": "已退出登录",
+      "invalidLoginParams": "登录参数不合法",
+      "invalidRegisterParams": "注册参数不合法"
+    },
+    "validation": {
+      "emailInvalid": "请输入合法邮箱",
+      "passwordMin": "密码至少 6 位",
+      "passwordMax": "密码过长",
+      "ageMin": "年龄必须大于 0",
+      "ageMax": "年龄不能超过 199",
+      "nameRequired": "姓名不能为空",
+      "nameMax": "姓名过长"
+    },
+    "token": {
+      "title": "当前 Token"
+    },
+    "profile": {
+      "id": "用户ID",
+      "name": "姓名",
+      "email": "邮箱",
+      "age": "年龄"
+    }
+  }
+}

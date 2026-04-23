@@ -1,7 +1,7 @@
 # P1-LARGE-FILE-STRATEGY
 
 Priority: P1
-Scope: `packages/web/src/**`
+Scope: `src/**`
 
 ## Rule
 - 对超大文件新增功能时，优先采用“先拆后加”策略，避免继续堆积复杂度。

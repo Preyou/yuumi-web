@@ -1,0 +1,87 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - generic [ref=e11]: Example
+        - list [ref=e13]:
+          - listitem [ref=e14]:
+            - button "Atom" [ref=e15] [cursor=pointer]:
+              - generic [ref=e17]: Atom
+            - list [ref=e18]:
+              - listitem [ref=e19]:
+                - link "Button" [ref=e20] [cursor=pointer]:
+                  - /url: /example/atom/button
+                  - generic [ref=e21]: Button
+          - listitem [ref=e22]:
+            - button "Molecule" [ref=e23] [cursor=pointer]:
+              - generic [ref=e25]: Molecule
+            - list [ref=e26]:
+              - listitem [ref=e27]:
+                - link "Basic" [ref=e28] [cursor=pointer]:
+                  - /url: /example/molecule/basic
+                  - generic [ref=e29]: Basic
+        - button "Toggle Sidebar" [ref=e30]
+      - main [ref=e31]:
+        - generic [ref=e32]:
+          - button "Toggle Sidebar" [ref=e33] [cursor=pointer]:
+            - img
+            - generic [ref=e34]: Toggle Sidebar
+          - navigation "Breadcrumb" [ref=e35]:
+            - list [ref=e36]:
+              - listitem [ref=e37]:
+                - link "Example" [ref=e38] [cursor=pointer]:
+                  - /url: /example
+              - listitem [ref=e40]:
+                - link "Atom" [ref=e41] [cursor=pointer]:
+                  - /url: /example/atom
+              - listitem [ref=e43]:
+                - generic [ref=e44]: Button
+        - generic [ref=e46]:
+          - generic [ref=e47]:
+            - heading "Atom Components" [level=1] [ref=e48]
+            - paragraph [ref=e49]: 基础组件示例与交互演示。
+          - navigation [ref=e50]:
+            - link "Button" [ref=e51] [cursor=pointer]:
+              - /url: /example/atom/button
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - heading "Button.vue 用法示例" [level=2] [ref=e54]
+              - paragraph [ref=e55]:
+                - text: 组件来源：
+                - code [ref=e56]: src/shared/atom/Button.vue
+            - generic [ref=e57]:
+              - heading "1. 基础样式" [level=3] [ref=e58]
+              - generic [ref=e59]:
+                - button "Default" [ref=e60] [cursor=pointer]
+                - button "Secondary" [ref=e61] [cursor=pointer]
+                - button "Outline" [ref=e62] [cursor=pointer]
+                - button "Ghost" [ref=e63] [cursor=pointer]
+                - button "Link" [ref=e64] [cursor=pointer]
+            - generic [ref=e65]:
+              - heading "2. Intent 语义色" [level=3] [ref=e66]
+              - generic [ref=e67]:
+                - button "Brand" [ref=e68] [cursor=pointer]
+                - button "Success" [ref=e69] [cursor=pointer]
+                - button "Warning" [ref=e70] [cursor=pointer]
+                - button "Info" [ref=e71] [cursor=pointer]
+                - button "Destructive" [ref=e72] [cursor=pointer]
+            - generic [ref=e73]:
+              - heading "3. Size 与状态" [level=3] [ref=e74]
+              - generic [ref=e75]:
+                - button "Small" [ref=e76] [cursor=pointer]
+                - button "Default" [ref=e77] [cursor=pointer]
+                - button "Large" [ref=e78] [cursor=pointer]
+                - button "Loading" [disabled] [ref=e79]:
+                  - status
+                  - text: Loading
+                - button "Disabled" [disabled] [ref=e80]
+            - generic [ref=e81]:
+              - heading "4. Block 按钮" [level=3] [ref=e82]
+              - button "Block Button" [ref=e84] [cursor=pointer]
+    - region "Notifications alt+T":
+      - list
+  - generic [ref=e85]:
+    - generic "Toggle devtools panel" [ref=e86] [cursor=pointer]:
+      - img [ref=e87]
+    - generic "Toggle Component Inspector" [ref=e92] [cursor=pointer]:
+      - img [ref=e93]
