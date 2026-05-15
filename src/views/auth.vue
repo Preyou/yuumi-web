@@ -12,10 +12,10 @@ import { zPostAuthSignEmailData } from '@/api/auto'
 import { sysApi } from '@/api/sysApi'
 import AtomButton from '@/shared/atom/Button.vue'
 import AtomInput from '@/shared/atom/Input.vue'
-import LanguageSelect from '@/shared/molecule/system/LanguageSelect.vue'
 import {
   createSchemaForm,
 } from '@/shared/molecule/form'
+import LanguageSelect from '@/shared/molecule/system/LanguageSelect.vue'
 
 definePage({
   name: 'auth-login',
@@ -59,7 +59,7 @@ const fieldMatchers: readonly SchemaFieldMatcher[] = [
 ]
 
 const SchemaForm = createSchemaForm<typeof loginSchema>(fieldMatchers)
-const onSubmit = async (payload: SchemaFormSubmitPayload<typeof loginSchema>): Promise<void> => {
+async function onSubmit(payload: SchemaFormSubmitPayload<typeof loginSchema>): Promise<void> {
   const response = await sysApi('/auth/sign/email').post({
     data: payload.values,
   })
@@ -68,7 +68,7 @@ const onSubmit = async (payload: SchemaFormSubmitPayload<typeof loginSchema>): P
 </script>
 
 <template>
-  <main class="grid min-h-screen place-items-center bg-linear-to-b from-slate-100 to-slate-200 px-4 py-12">
+  <main class="grid min-h-screen place-items-center bg-linear-to-b from-slate-100 to-slate-200 px-4 py-12 size-full">
     <section class="w-full max-w-md rounded-xl border bg-background p-6 shadow-sm">
       <header class="mb-6">
         <div class="flex items-start justify-between gap-4">

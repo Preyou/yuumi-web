@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import AtomSelect from '@/shared/atom/Select.vue'
-import AtomSwitch from '@/shared/atom/Switch.vue'
 import LanguageSelect from '@/shared/molecule/system/LanguageSelect.vue'
-import { useThemeState } from '@/shared/molecule/theme/useTheme'
+import { useTheme } from '@/shared/molecule/theme/useTheme'
 import {
   Sidebar,
   SidebarContent,
@@ -15,14 +14,16 @@ import {
 } from '@/shared/ui/sidebar'
 
 const { t, te } = useI18n()
-const { currentThemeName: themePreset, isDark: isDarkMode, setTheme, themePresetNames } = useThemeState()
+const { preset, presets, setPreset } = useTheme()
 
 const themeOptions = computed(() => {
-  return themePresetNames.map((value) => {
-    const labelKey = `common.themePreset.${value}`
+  return presets.value.map(({ key, mode, themeName }) => {
+    const labelKey = `common.themePreset.${themeName}`
+    const modeKey = mode === 'dark' ? 'common.colorMode.dark' : 'common.colorMode.light'
+    const label = te(labelKey) ? t(labelKey) : themeName
     return {
-      label: te(labelKey) ? t(labelKey) : value,
-      value,
+      label: `${label} (${t(modeKey)})`,
+      value: key,
     }
   })
 })
@@ -63,22 +64,13 @@ const themeOptions = computed(() => {
             </span>
             <div class="w-[150px]">
               <AtomSelect
-                :model-value="themePreset"
+                :model-value="preset"
                 :options="themeOptions"
-                @update:model-value="(value) => { setTheme(String(value)) }"
+                @update:model-value="(value) => { setPreset(String(value)) }"
               />
             </div>
           </div>
 
-          <div class="flex items-center gap-2 rounded-md border px-2 py-1">
-            <span class="text-muted-foreground text-xs">
-              {{ isDarkMode ? $t('common.colorMode.dark') : $t('common.colorMode.light') }}
-            </span>
-            <AtomSwitch
-              :model-value="isDarkMode"
-              @update:model-value="(value) => { isDarkMode = value === true }"
-            />
-          </div>
         </div>
       </header>
       <section class="flex-1 overflow-auto p-4">

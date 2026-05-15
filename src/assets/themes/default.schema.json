@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuumi.local/schemas/themes/default.schema.json",
+  "title": "Yuumi theme variables",
+  "type": "object",
+  "additionalProperties": {
+    "$ref": "#/$defs/cssValue"
+  },
+  "required": [
+    "base-color",
+    "radius",
+    "palette-50",
+    "palette-100",
+    "palette-200",
+    "palette-300",
+    "palette-400",
+    "palette-500",
+    "palette-600",
+    "palette-700",
+    "palette-800",
+    "palette-900",
+    "palette-950",
+    "background",
+    "foreground",
+    "card",
+    "card-foreground",
+    "popover",
+    "popover-foreground",
+    "primary",
+    "primary-foreground",
+    "secondary",
+    "secondary-foreground",
+    "muted",
+    "muted-foreground",
+    "accent",
+    "accent-foreground",
+    "destructive",
+    "destructive-foreground",
+    "warning",
+    "warning-foreground",
+    "success",
+    "success-foreground",
+    "info",
+    "info-foreground",
+    "brand",
+    "brand-foreground",
+    "border",
+    "input",
+    "ring",
+    "chart-1",
+    "chart-2",
+    "chart-3",
+    "chart-4",
+    "chart-5",
+    "sidebar",
+    "sidebar-foreground",
+    "sidebar-primary",
+    "sidebar-primary-foreground",
+    "sidebar-accent",
+    "sidebar-accent-foreground",
+    "sidebar-border",
+    "sidebar-ring"
+  ],
+  "properties": {
+    "base-color": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "radius": {
+      "$ref": "#/$defs/cssSize"
+    },
+    "palette-50": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-100": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-200": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-300": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-400": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-500": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-600": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-700": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-800": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-900": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "palette-950": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "background": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "card": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "card-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "popover": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "popover-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "primary": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "primary-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "secondary": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "secondary-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "muted": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "muted-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "accent": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "accent-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "destructive": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "destructive-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "warning": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "warning-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "success": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "success-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "info": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "info-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "brand": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "brand-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "border": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "input": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "ring": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "chart-1": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "chart-2": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "chart-3": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "chart-4": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "chart-5": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "sidebar": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "sidebar-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "sidebar-primary": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "sidebar-primary-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "sidebar-accent": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "sidebar-accent-foreground": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "sidebar-border": {
+      "$ref": "#/$defs/cssColor"
+    },
+    "sidebar-ring": {
+      "$ref": "#/$defs/cssColor"
+    }
+  },
+  "$defs": {
+    "cssValue": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cssColor": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A CSS color value accepted by CSS.supports('color', value)."
+    },
+    "cssSize": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A CSS size value accepted by CSS.supports('width', value)."
+    }
+  }
+}

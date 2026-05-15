@@ -1,57 +1,115 @@
+import { z } from 'zod'
+import defaultDarkTheme from './default.dark.json'
 import defaultTheme from './default.json'
+import defaultSchema from './default.schema.json'
 
-type ThemeSchema = typeof defaultTheme
-interface ThemeOverride {
-  dark?: Partial<ThemeSchema['dark']>
-  light?: Partial<ThemeSchema['light']>
+export type ThemeMode = 'dark' | 'light'
+export type ThemeSource = Record<string, string>
+type JsonSchemaSource = Record<string, unknown>
+export type ThemeSchema = z.ZodObject
+export type ThemeVariables<Schema extends ThemeSchema = ThemeSchema> = z.infer<Schema> & ThemeSource
+
+export interface ThemeEntry<Schema extends ThemeSchema = ThemeSchema> {
+  name: string
+  dark: ThemeVariables<Schema>
+  light: ThemeVariables<Schema>
+  schema: Schema
 }
 
-const importedThemes = import.meta.glob('./*.json', {
+interface ThemeFile {
+  name: string
+  mode: ThemeMode
+  source: ThemeSource
+}
+
+const defaultZodSchema = z.fromJSONSchema(defaultSchema as JsonSchemaSource) as ThemeSchema
+
+const themeFiles = import.meta.glob(['./*.json', '!./*.schema.json'], {
   eager: true,
   import: 'default',
-}) as Record<string, ThemeOverride>
+}) as Record<string, ThemeSource>
 
-function resolveThemeName(path: string): string | null {
+const schemaFiles = import.meta.glob('./*.schema.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, JsonSchemaSource>
+
+function resolveThemeFile(path: string, source: ThemeSource): ThemeFile | null {
   const match = /\/([^/]+)\.json$/.exec(path)
+  const fileName = match?.[1]
+  if (!fileName || fileName.endsWith('.schema')) {
+    return null
+  }
+
+  const mode = fileName.endsWith('.dark') ? 'dark' : 'light'
+  const name = fileName.replace(/\.dark$/, '')
+
+  return {
+    mode,
+    name,
+    source,
+  }
+}
+
+function resolveSchemaName(path: string): string | null {
+  const match = /\/([^/]+)\.schema\.json$/.exec(path)
   return match?.[1] ?? null
 }
 
-function mergeTheme(overrides?: ThemeOverride): ThemeSchema {
-  if (!overrides) {
-    return defaultTheme
+function createZodSchema(schemaSource?: JsonSchemaSource): ThemeSchema {
+  if (!schemaSource) {
+    return defaultZodSchema
   }
 
-  return {
-    ...defaultTheme,
-    dark: {
-      ...defaultTheme.dark,
-      ...overrides.dark,
-    },
-    light: {
-      ...defaultTheme.light,
-      ...overrides.light,
-    },
-  }
+  const schema = z.fromJSONSchema(schemaSource) as ThemeSchema
+  return defaultZodSchema.merge(schema) as ThemeSchema
 }
 
-const mergedThemes = Object.fromEntries(
-  Object.entries(importedThemes).flatMap(([path, theme]) => {
-    const themeName = resolveThemeName(path)
-    if (!themeName) {
-      return []
+function parseTheme<Schema extends ThemeSchema>(
+  schema: Schema,
+  mode: ThemeMode,
+  override?: ThemeSource,
+): ThemeVariables<Schema> {
+  const baseline = mode === 'dark' ? defaultDarkTheme : defaultTheme
+  return schema.parse({
+    ...baseline,
+    ...override,
+  }) as ThemeVariables<Schema>
+}
+
+const groupedThemeFiles = Object.entries(themeFiles).reduce<Record<string, Partial<Record<ThemeMode, ThemeSource>>>>(
+  (groups, [path, source]) => {
+    const themeFile = resolveThemeFile(path, source)
+    if (!themeFile) {
+      return groups
     }
 
-    return [[themeName, mergeTheme(theme)]]
+    return {
+      ...groups,
+      [themeFile.name]: {
+        ...groups[themeFile.name],
+        [themeFile.mode]: themeFile.source,
+      },
+    }
+  },
+  {},
+)
+
+const groupedSchemas = Object.fromEntries(
+  Object.entries(schemaFiles).flatMap(([path, source]) => {
+    const name = resolveSchemaName(path)
+    if (!name) {
+      return []
+    }
+    return [[name, name === 'default' ? defaultZodSchema : createZodSchema(source)]]
   }),
 ) as Record<string, ThemeSchema>
 
-if (!('default' in mergedThemes)) {
-  mergedThemes.default = defaultTheme
-}
-
-export const themePresets = mergedThemes
-
-export const themePresetNames = Object.keys(themePresets)
+const themeNames = Array.from(new Set([
+  'default',
+  ...Object.keys(groupedThemeFiles),
+  ...Object.keys(groupedSchemas),
+]))
   .sort((a, b) => {
     if (a === 'default') {
       return -1
@@ -62,8 +120,21 @@ export const themePresetNames = Object.keys(themePresets)
     return a.localeCompare(b, 'zh-Hans-CN')
   })
 
-export const fallbackThemePresetName = themePresetNames.includes('default')
-  ? 'default'
-  : (themePresetNames[0] ?? 'default')
+const themeMap = new Map<string, ThemeEntry>(
+  themeNames.map((name) => {
+    const schema = groupedSchemas[name] ?? defaultZodSchema
+    const themeSource = groupedThemeFiles[name] ?? {}
 
-export type ThemePresetName = string
+    return [
+      name,
+      {
+        dark: parseTheme(schema, 'dark', themeSource.dark),
+        light: parseTheme(schema, 'light', themeSource.light),
+        name,
+        schema,
+      },
+    ]
+  }),
+)
+
+export default themeMap
